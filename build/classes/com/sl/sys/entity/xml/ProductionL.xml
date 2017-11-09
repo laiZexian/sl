@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//UNKNOWN/" "mybatis-3-mapper.dtd">
+<mapper namespace="com.sl.sys.dao.ProSetLDao">
+	<select id="showProSet" resultType="ProSet">
+		SELECT * FROM ProSet
+		WHERE setName LIKE '重消套装%'
+	</select>
+	<select id="showByIdProSet" resultType="ProSet">
+		select * from ProSet 
+		WHERE setName = '辅消套装（C）'
+	</select>
+	
+	<select id="ByIdProSet" resultType="ProSet">
+		select * from ProSet
+		where setId = #{setId}
+	</select>
+</mapper>

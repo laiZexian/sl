@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//UNKNOWN/" "mybatis-3-mapper.dtd">
+<mapper namespace="com.sl.sys.dao.CostInfoqDao">
+	
+	<select id="queryCostInfoList" resultType="CostInfo">
+		select * from costInfo 
+		<where>
+			<if test="userCode != null and userCode != ''">
+				and userCode = #{userCode}
+			</if>
+			<if test="firstCostDate != null and firstCostDate != ''">
+                	and #{firstCostDate} &lt;= DATE_FORMAT(costDate,'%Y-%m-%d')
+			</if>
+			<if test="lastCostDate != null and lastCostDate != ''">
+                	and #{lastCostDate} &gt;= DATE_FORMAT(costDate,'%Y-%m-%d')
+			</if>
+			<if test="costType != null and firstCostDate !=0">
+				and costType = #{costType}
+			</if>
+		</where>
+	</select>
+	
+	<select id="queryCostInfoCount" resultType="int">
+		select count(0) from costInfo
+		<where>
+			<if test="userCode != null and userCode != ''">
+				and userCode = #{userCode}
+			</if>
+			<if test="firstCostDate != null and firstCostDate != ''">
+                	and #{firstCostDate} &lt;= DATE_FORMAT(costDate,'%Y-%m-%d')
+			</if>
+			<if test="lastCostDate != null and lastCostDate != ''">
+                	and #{lastCostDate} &gt;= DATE_FORMAT(costDate,'%Y-%m-%d')
+			</if>
+			<if test="costType != null and firstCostDate !=0">
+				and costType = #{costType}
+			</if>
+		</where>
+	</select>
+	
+	<insert id="addCostInfo">
+		insert into `costInfo` (
+			costDate,	costMoney,	totalMoney, userCode, costType, costSpec,	num	
+		)  values(
+			#{costDate},#{costMoney},#{totalMoney},#{userCode},#{costType},#{costSpec},#{num}
+		)
+	</insert>
+	
+</mapper>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//UNKNOWN/" "mybatis-3-mapper.dtd">
+<mapper namespace="com.sl.sys.dao.ParametersDao">
+	<select id="queryParameters" resultType="Parameters">
+		SELECT *FROM `parameters` p 
+		<where>
+			<if test="paraName != null and paraName != ''">
+			 p.`paraName` LIKE '%${paraName}%'
+			</if>
+		</where>
+		LIMIT #{num},#{size}
+	</select>
+	
+	<select id="queryCountParam" resultType="Integer">
+		SELECT count(*) FROM parameters p  
+		<where>
+			<if test="paraName != null and paraName != ''">
+			 p.`paraName` LIKE '%${paraName}%'
+			</if>
+		</where>
+		
+	</select>
+	<select id="queryParameter" resultType="Parameters">
+		SELECT *FROM `parameters` p 
+		<where>
+			<if test="paraCode !=null and paraCode !=''">
+				p.`paraCode`=#{paraCode}
+			</if>
+		</where>
+	</select>
+	<insert id="addParameters">
+		INSERT INTO `slmall`.`parameters`
+	    (`paraCode`,
+	     `paraName`,
+	     `paraValue`,
+	     `paraSpec`)
+	    VALUES (#{paraCode},
+	    		#{paraName},
+	    		#{paraValue},
+	    		#{paraSpec})
+	</insert>
+	
+	<delete id="delParameters">
+		DELETE FROM parameters WHERE paraCode=#{paraCode}
+	</delete>
+	
+	<update id="updateParameters">
+		UPDATE `slmall`.`parameters`
+		SET
+		  `paraName` = #{paraName},
+		  `paraValue` = #{paraValue},
+		  `paraSpec` = #{paraSpec}
+		WHERE `paraCode` = #{paraCode}
+		
+	</update>
+</mapper>

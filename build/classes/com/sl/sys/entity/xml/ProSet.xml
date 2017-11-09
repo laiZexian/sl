@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//UNKNOWN/" "mybatis-3-mapper.dtd">
+<mapper namespace="com.sl.sys.dao.ProSetDao">
+	<select id="queryProSets" resultType="ProSet">
+		SELECT *FROM ProSet d  
+		<where>
+			<if test="setName !=null and setName !=''">
+			d.`setName` LIKE  '%${setName}%'
+			</if>
+		</where>
+		LIMIT #{num},#{size}
+	</select>
+	
+	<select id="querySetCount" resultType="Integer">
+		SELECT count(*) FROM ProSet d  
+		<where>
+			<if test="setName !=null and setName !=''">
+			d.`setName` LIKE  '%${setName}%'
+			</if>
+		</where>
+		
+	</select>
+	<select id="queryProSet" resultType="ProSet">
+		select * from ProSet d
+		<where>
+			<if test="setId!=null and setId !=''">
+				d.`setId`=#{setId}
+			</if>
+		</where>
+	</select>
+	<insert id="addProSet">
+			INSERT INTO `slmall`.`proset`
+		    (`setId`,
+		     `setName`,
+		     `markPrice`,
+		     `prePrice`,
+		     `setType`,
+		     `stutas`,
+		     `spec`,
+		     `setNum`,
+		     `score`)
+				VALUES (#{setId},
+				#{setName},
+				#{markPrice},
+				#{prePrice},
+				#{setType},
+				#{stutas},
+				#{spec},
+				#{setNum},
+				#{score})
+	</insert>
+	
+	<delete id="delProSet">
+		DELETE FROM ProSet WHERE setId=#{setId}
+	</delete>
+	
+	<update id="updateProSet">
+		UPDATE `slmall`.`proset`
+		SET 
+		  `setName` = #{setName},
+		  `markPrice` = #{markPrice},
+		  `prePrice` = #{prePrice},
+		  `setType` = #{setType},
+		  `stutas` = #{stutas},
+		  `spec` = #{spec},
+		  `setNum` = #{setNum},
+		  `score` = #{score}
+		WHERE `setId` = #{setId}
+	</update>
+	
+	<!-- 返回的商品详情结果集 -->
+	<resultMap type="Production" id="produList"></resultMap>
+	<resultMap type="SetInfo" id="setInfos">
+		<result property="proId" column="proId"></result>
+		<association property="pro" resultMap="produList"></association>
+	</resultMap>
+	<!-- 获得套餐下的商品信息和数量 -->
+	<select id="querySetInfo" resultMap="setInfos">
+	SELECT *FROM  setinfo s INNER JOIN production p ON s.`proId`=p.`proId` 
+	WHERE s.`setId`=#{setId}
+	</select>
+	
+	<insert id="addSetsInfos">
+	INSERT INTO `slmall`.`setinfo`
+    (`infoId`,
+     `setId`,
+     `proId`,
+     `proNum`)
+	VALUES (DEFAULT,
+	#{setId},
+	#{proId},
+	#{proNum})
+	</insert>
+	
+	<delete id="delSetsInfo">
+	DELETE
+	FROM `slmall`.`setinfo`
+	WHERE `setId` = #{setId}
+	</delete>
+</mapper>

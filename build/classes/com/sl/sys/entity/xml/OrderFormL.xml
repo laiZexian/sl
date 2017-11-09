@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//UNKNOWN/" "mybatis-3-mapper.dtd">
+<mapper namespace="com.sl.sys.dao.OrderFormLDao">
+	<select id="showroderform" resultType="OrderForm">
+		select orderId,userCode,receiveName,createDate,dictionary.dicName,total,score 
+		from orderForm,dictionary 
+		where dictionary.`dicType` = '套餐类型' 
+		and orderForm.`saleType` = dictionary.`dicValue` 
+	</select>
+	<select id="querOderForm" resultType="OrderForm">
+		select * from orderForm
+	</select>
+	<delete id="deleOrder">
+		DELETE FROM orderForm WHERE orderId = #{orderId}
+	</delete>
+</mapper>

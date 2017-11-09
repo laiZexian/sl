@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//UNKNOWN/" "mybatis-3-mapper.dtd">
+<mapper namespace="com.sl.sys.dao.CashInfoqDao">
+
+	<select id="queryCashInfoList" resultType="CashInfo">
+		select * from CashInfo 
+		<where>
+			<if test="userCode != null and userCode != ''">
+				and userCode = #{userCode}
+			</if>
+			<if test="firstCashDate != null and firstCashDate != ''">
+                	and #{firstCashDate} &lt;= DATE_FORMAT(cashDate,'%Y-%m-%d')
+			</if>
+			<if test="lastCashDate != null and lastCashDate != ''">
+                	and #{lastCashDate} &gt;= DATE_FORMAT(cashDate,'%Y-%m-%d')
+			</if>
+		</where>
+	</select>
+	
+	<select id="queryCashInfoCount" resultType="int">
+		select count(0) from CashInfo
+		<where>
+			<if test="userCode != null and userCode != ''">
+				and userCode = #{userCode}
+			</if>
+			<if test="firstCashDate != null and firstCashDate != ''">
+                	and #{firstCashDate} &lt;= DATE_FORMAT(cashDate,'%Y-%m-%d')
+			</if>
+			<if test="lastCashDate != null and lastCashDate != ''">
+                	and #{lastCashDate} &gt;= DATE_FORMAT(cashDate,'%Y-%m-%d')
+			</if>
+		</where>
+	</select>
+	
+</mapper>

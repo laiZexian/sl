@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//UNKNOWN/" "mybatis-3-mapper.dtd">
+<mapper namespace="com.sl.sys.dao.UserDao">
+	<resultMap type="Role" id="RoleList"></resultMap>
+	<resultMap type="User" id="UserMap">
+		<association property="role" resultMap="RoleList"/>
+	</resultMap>
+	<select id="queryUser" resultMap="UserMap">
+		SELECT * FROM `user` u 
+		inner join 	`role` r on u.roleId =r.roleId
+		WHERE u.`userCode` =#{userCode} AND u.`logPwd`=#{logPwd}
+	</select>
+	<select id="queryUsers"  resultType="User">
+		select *from  `user`  u
+		<where>
+			<if test="userCode !=null and userCode !=''">
+			u.`userCode` LIKE  '%${userCode}%'
+			</if>
+		</where>
+		order by modifyDate desc
+		LIMIT #{num},#{size}
+	</select>
+	<select id="queryCount" resultType="Integer">
+		select count(*)  from  `user`  u
+		<where>
+			<if test="userCode !=null and userCode !=''">
+			u.`userCode` LIKE  '%${userCode}%'
+			</if>
+		</where>
+	</select>
+	<select id="queryU" resultType="User">
+		select *from  `user`  u
+		where u.`userCode`=#{userCode}
+	</select>
+	<insert id="addUser">
+		INSERT INTO `slmall`.`user`
+	    (`userCode`,
+	     `realName`,
+	     `logPwd`,
+	     `secPwd`,
+	     `roleId`,
+	     `member`,
+	     `cardType`,
+	     `cardNo`,
+	     `country`,
+	     `telephone`,
+	     `phone`,
+	     `email`,
+	     `postCode`,
+	     `address`,
+	     `bank`,
+	     `bankNo`,
+	     `bankUser`,
+	     `idcardPicFron`,
+	     `idcardPicRev`,
+	     `bankCardPic`,
+	     `createCode`,
+	     `userStutas`,
+	     `createDate`,
+	     `modifyDate`)
+		VALUES (#{userCode},
+		#{realName},
+		#{logPwd},
+		#{secPwd},
+		#{roleId},
+		#{member},
+		#{cardType},
+		#{cardNo},
+		#{country},
+		#{telephone},
+		#{phone},
+		#{email},
+		#{postCode},
+		#{address},
+		#{bank},
+		#{bankNo},
+		#{bankUser},
+		#{idcardPicFron},
+		#{idcardPicRev},
+		#{bankCardPic},
+		#{createCode},
+		#{userStutas},
+		#{createDate},
+		#{modifyDate})
+	</insert>
+	<update id="updateUser">
+		UPDATE `slmall`.`user`
+		SET 
+		  `realName` = #{realName},
+		  
+		  `roleId` = #{roleId},
+		  `member` = #{member},
+		  `cardType` = #{cardType},
+		  `cardNo` = #{cardNo},
+		  `country` = #{country},
+		  `telephone` = #{telephone},
+		  `phone` = #{phone},
+		  `email` = #{email},
+		  `postCode` = #{postCode},
+		  `address` = #{address},
+		  `bank` = #{bank},
+		  `bankNo` = #{bankNo},
+		  `bankUser` = #{bankUser},
+		  <if test="idcardPicFron != null and idcardPicFron != ''">
+		   `idcardPicFron` = #{idcardPicFron},
+		  </if>
+		   <if test="idcardPicRev != null and idcardPicRev != ''">
+		   `idcardPicRev` = #{idcardPicRev},
+		  </if>
+		   <if test="bankCardPic != null and bankCardPic != ''">
+		  `bankCardPic` = #{bankCardPic},
+		  </if>
+		  `userStutas` = #{userStutas},
+		  
+		  `modifyDate` = #{modifyDate}
+		WHERE `userCode` = #{userCode}
+	
+	</update>
+	<delete id="delUser">
+		delete from `user` where userCode=#{userCode}
+	</delete>
+	
+	
+	
+	
+	<insert id="addMoney">
+		INSERT INTO `slmall`.`costinfo`
+            (`costId`,
+             `costDate`,
+             `costMoney`,
+             `totalMoney`,
+             `userCode`,
+             `costType`,
+             `costSpec`)
+			VALUES (default,
+			        #{costDate},
+			        #{costMoney},
+			        #{totalMoney},
+			        #{userCode},
+			        #{costType},
+			        #{costSpec})
+	
+	</insert>
+</mapper>

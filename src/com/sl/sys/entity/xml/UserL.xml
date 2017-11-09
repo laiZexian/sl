@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//UNKNOWN/" "mybatis-3-mapper.dtd">
+<mapper namespace="com.sl.sys.dao.UserLDao">
+	<select id="selectUser" resultType="User">
+		select * from User where userCode=#{account} and member = 1
+	</select>
+	<select id="querUser" resultType="User">
+		select * from user 
+		where userCode = #{userCode,jdbcType=VARCHAR}
+		and secPwd = #{secPwd,jdbcType=VARCHAR}
+	</select>
+	<update id="updateUser">
+		UPDATE `user` 
+		SET 
+		createCode = #{createCode,jdbcType=VARCHAR}
+		WHERE userCode = #{userCode,jdbcType=VARCHAR}
+	</update>
+	
+	
+</mapper>

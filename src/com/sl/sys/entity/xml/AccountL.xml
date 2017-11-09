@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//UNKNOWN/" "mybatis-3-mapper.dtd">
+<mapper namespace="com.sl.sys.dao.AccountLDao">
+	<select id="showAccount" resultType="Account">
+		SELECT * FROM account
+		WHERE accountType = 1 
+		AND userCode = #{userCode}
+	</select>
+	
+	<update id="uperAccount">
+		UPDATE `account` 
+		SET 
+		totalMoney = #{totalMoney,jdbcType=VARCHAR}
+		WHERE userCode = #{userCode,jdbcType=VARCHAR}
+		and accountType = 1
+	</update>
+</mapper>

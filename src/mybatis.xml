@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "//UNKNOWN/" "mybatis-3-config.dtd">
+<configuration>
+	<settings>
+		<!-- 自动映射级别有三个
+			NONE  不自动 映射 
+			PARTIAL 自动匹配所有    有嵌入对象不自动映射 
+			FULL  匹配嵌入对象
+		 -->
+		<setting name="autoMappingBehavior" value="FULL"/>
+	</settings>
+</configuration>

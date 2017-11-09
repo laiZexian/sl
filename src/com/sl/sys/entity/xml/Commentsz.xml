@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//UNKNOWN/" "mybatis-3-mapper.dtd">
+<mapper namespace="com.sl.sys.dao.CommentszDao">
+	<select id="queryCommentss" resultType="Comments">
+		SELECT * FROM Comments
+	</select>
+	 <select id="queryComments" resultType="Comments">
+	 	SELECT * FROM Comments WHERE cmId=#{cmId}
+	 </select>
+	
+	<delete id="deleteComments" >
+		DELETE  FROM Comments WHERE cmId=#{cmId}
+	</delete>
+</mapper>

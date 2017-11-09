@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//UNKNOWN/" "mybatis-3-mapper.dtd">
+<mapper namespace="com.sl.sys.dao.NoticezDao">
+	<select id="queryNotices" resultType="Notice">
+		SELECT * FROM Notice
+	</select>
+	 <select id="queryNotice" resultType="Notice">
+	 	SELECT * FROM Notice WHERE noid=#{noId}
+	 </select>
+	 
+	 <insert id="saveNotice">
+	 	insert into Notice(noTitle,startTime , endTime ,noContent  ,createDate) 
+	 		values(#{noTitle},#{startTime},#{endTime},#{noContent},Now() )
+	 </insert>
+	 
+	 <update id="updateNotice">
+		UPDATE `Notice` 
+			SET
+		`noTitle` = #{noTitle}, 
+		`startTime` = #{startTime}, 
+		`endTime` = #{endTime}, 
+		`noContent` = #{noContent}
+		where
+		`noId` = #{noId}
+	</update>
+	
+	<delete id="deleteNotice">
+		delete from Notice where noId=#{noId} 
+	</delete>
+	<!--<update id=""></update>
+	<delete id=""></delete> -->
+</mapper>

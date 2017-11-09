@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//UNKNOWN/" "mybatis-3-mapper.dtd">
+<mapper namespace="com.sl.sys.dao.DictionaryDao">
+	<select id="queryDictionarys" resultType="Dictionary">
+		SELECT *FROM dictionary d  
+		<where>
+			<if test="dicType !=null and dicType !=''">
+			d.`dicType` LIKE  '%${dicType}%'
+			</if>
+		</where>
+		LIMIT #{num},#{size}
+	</select>
+	
+	<select id="queryCount" resultType="Integer">
+		SELECT count(*) FROM dictionary d  
+		<where>
+			<if test="dicType !=null and dicType !=''">
+			d.`dicType` LIKE  '%${dicType}%'
+			</if>
+		</where>
+		
+	</select>
+	<select id="queryDictionary" resultType="Dictionary">
+		select * from dictionary d
+		<where>
+			<if test="dicCode !=null and dicCode !=''">
+				d.`dicCode`=#{dicCode}
+			</if>
+		</where>
+	</select>
+	<insert id="addDictionary">
+		INSERT INTO dictionary
+	    (dicCode,
+	     dicType,
+	     dicName,
+	     dicValue,	
+	     dicSpec)
+		VALUES (#{dicCode},
+		#{dicType},
+		#{dicName},
+		#{dicValue},
+		#{dicSpec})
+	</insert>
+	
+	<delete id="delDictionary">
+		DELETE FROM dictionary WHERE dicCode=#{dicCode}
+	</delete>
+	
+	<update id="updateDictionary">
+		UPDATE `dictionary`
+		SET 
+		  `dicType` = #{dicType},
+		  `dicName` = #{dicName},
+		  `dicValue` = #{dicValue},
+		  `dicSpec` = #{dicSpec}
+		WHERE `dicCode` = #{dicCode}
+	</update>
+	
+	<select id="queryType" resultType="Dictionary">
+	SELECT *FROM dictionary d WHERE d.`dicType`=#{dicType}
+	</select>
+</mapper>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//UNKNOWN/" "mybatis-3-mapper.dtd">
+<mapper namespace="com.sl.sys.dao.RoleDao">
+	<select id="queryRoles" resultType="Role">
+		SELECT *FROM Role r 
+		<where>
+			<if test="roleName !=null and roleName !=''">
+			r.`roleName` LIKE  '%${roleName}%'
+			</if>
+		</where>
+		ORDER BY modifyDate DESC
+
+		LIMIT #{num},#{size}
+		
+	</select>
+	
+	<select id="queryRoleCount" resultType="Integer">
+		SELECT count(*) FROM Role r 
+		<where>
+			<if test="roleName !=null and roleName !=''">
+			r.`roleName` LIKE  '%${roleName}%'
+			</if>
+		</where>
+		
+	</select>
+	<select id="queryRole" resultType="Role">
+		select * from Role r
+		<where>
+			<if test="roleId !=null and roleId !=''">
+				r.`roleId`=#{roleId}
+			</if>
+		</where>
+	</select>
+	<insert id="addRole">
+		INSERT INTO `slmall`.`role`
+	    (`roleId`,
+	     `roleName`,
+	     `userCode`,
+	     `roleStutas`,
+	     `modifyDate`)
+		VALUES (#{roleId},
+		#{roleName},
+		#{userCode},
+		#{roleStutas},
+		#{modifyDate})
+	</insert>
+	
+	<delete id="delRole">
+		DELETE FROM role WHERE roleId=#{roleId}
+	</delete>
+	
+	<update id="updateRole">
+		UPDATE `slmall`.`role`
+		SET 
+		  `roleName` = #{roleName},
+		  `userCode` = #{userCode},
+		  `roleStutas` = #{roleStutas},
+		  `modifyDate` = #{modifyDate}
+		WHERE `roleId` = #{roleId}
+
+	</update>
+	<select id="queryCountUserForRole" resultType="Integer">
+		SELECT COUNT(*) FROM `user` u WHERE  u.`roleId`=#{roleId}
+	</select>
+	
+	<select id="queryRoleList" resultType="Role">
+		select *from role
+	</select>
+</mapper>

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//UNKNOWN/" "mybatis-3-mapper.dtd">
+<mapper namespace="com.sl.sys.dao.UserqDao">
+
+	<insert id="addUser">
+		insert into `user` (
+			userCode,		realName,		logPwd,			secPwd,			roleId,
+			member,		cardType,		cardNo,			country,			telephone,
+			phone,			email,			postCode,			address,			bank,
+			bankNo,		bankUser,		idcardPicFron,	idcardPicRev,	bankCardPic,
+			createCode,	userStutas,	createDate,		modifyDate
+		)  values(
+			#{userCode},		#{realName},		#{logPwd},			#{secPwd},			#{roleId},
+			#{member},		#{cardType},		#{cardNo},			#{country},			#{telephone},
+			#{phone},			#{email},			#{postCode},			#{address},			#{bank},
+			#{bankNo},		#{bankUser},		#{idcardPicFron},	#{idcardPicRev},	#{bankCardPic},
+			#{createCode},	#{userStutas},	sysdate(),				sysdate()
+		)
+	</insert>
+	
+	<select id="queryUser" resultType="User">
+		select * from `user` where userCode = #{userCode}
+	</select>
+	
+	<update id="updateUserInfo">
+		update `user` 
+		<set>
+			<if test="realName != null and realName !=''">
+				realName=#{realName},
+			</if>
+			<if test="logPwd != null and logPwd !=''">
+				logPwd=#{logPwd},
+			</if>
+			<if test="secPwd != null and secPwd !=''">
+				secPwd=#{secPwd},
+			</if>
+			<if test="roleId != null and roleId !=''">
+				roleId=#{roleId},
+			</if>
+			<if test="member != null and member != 0">
+				member=#{member},
+			</if>
+			<if test="cardType != null and cardType != 0 ">
+				cardType=#{cardType},
+			</if>
+			<if test="cardNo != null and cardNo !=''">
+				cardNo=#{cardNo},
+			</if>
+			<if test="country != null and country !=''">
+				country=#{country},
+			</if>
+			<if test="telephone != null and telephone !=''">
+				telephone=#{telephone},
+			</if>
+			<if test="phone != null and phone !=''">
+				phone=#{phone},
+			</if>
+			<if test="email != null and email !=''">
+				email=#{email},
+			</if>
+			<if test="postCode != null and postCode !=''">
+				postCode=#{postCode},
+			</if>
+			<if test="address != null and address !=''">
+				address=#{address},
+			</if>
+			<if test="bank != null and bank !=''">
+				bank=#{bank},
+			</if>
+			<if test="bankNo != null and bankNo !=''">
+				bankNo=#{bankNo},
+			</if>
+			<if test="bankUser != null and bankUser !=''">
+				bankUser=#{bankUser},
+			</if>
+			<if test="idcardPicFron != null and idcardPicFron !=''">
+				idcardPicFron=#{idcardPicFron},
+			</if>
+			<if test="idcardPicRev != null and idcardPicRev !=''">
+				idcardPicRev=#{idcardPicRev},
+			</if>
+			<if test="bankCardPic != null and bankCardPic !=''">
+				bankCardPic=#{bankCardPic},
+			</if>
+			<if test="userStutas != null and userStutas !=''">
+				userStutas=#{userStutas},
+			</if>
+				modifyDate=sysdate(),
+		</set>
+		where userCode = #{userCode}
+	</update>
+	
+	<delete id="delUser">
+		delete from `user` where userCode = #{userCode}
+	</delete>
+
+	<select id="queryUserList" resultType="User">
+		select * from `user`
+		<where>
+			<if test="createCode != null and createCode !=''">
+				createCode = #{createCode}
+			</if>
+		</where>
+		limit #{start},#{end}
+	</select>
+
+	<select id="checkUserPwd" resultType="User">
+		select * from `user` where 
+			<if test="logPwd != null and logPwd != ''">
+				logPwd = #{logPwd}
+			</if>
+			<if test="secPwd != null and secPwd != ''">
+				secPwd = #{secPwd}
+			</if>
+		and userCode = #{userCode}
+	</select>
+
+	<select id="queryUserListCount" resultType="int">
+		select count(0) from `user`
+		<where>
+			<if test="createCode != null and createCode !=''">
+				createCode = #{createCode}
+			</if>
+		</where>
+	</select>
+
+</mapper>

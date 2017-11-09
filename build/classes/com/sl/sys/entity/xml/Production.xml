@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//UNKNOWN/" "mybatis-3-mapper.dtd">
+<mapper namespace="com.sl.sys.dao.ProductionDao">
+	<select id="queryProductions" resultType="Production">
+		SELECT *FROM Production p  
+		<where>
+			<if test="proName !=null and proName !=''">
+			p.`proName` LIKE  '%${proName}%'
+			</if>
+		</where>
+		order by modifyDate desc
+		LIMIT #{num},#{size}
+	</select>
+	
+	<select id="queryCountByPro" resultType="Integer">
+		SELECT count(*) FROM Production p  
+		<where>
+			<if test="proName !=null and proName !=''">
+			p.`proName` LIKE  '%${proName}%'
+			</if>
+		</where>
+		
+	</select>
+	<select id="queryProduction" resultType="Production">
+		select * from Production d
+		<where>
+			<if test="proId !=null and proId !=''">
+				d.`proId`=#{proId}
+			</if>
+		</where>
+	</select>
+	<insert id="addProduction">
+		INSERT INTO `slmall`.`production`
+	    (`proId`,
+	     `proName`,
+	     `markPrice`,
+	     `prePrice`,
+	     `proCount`,
+	     `unit`,
+	     `stutas`,
+	     `standard`,
+	     `spec`,
+	     `modifyDate`)
+			VALUES (#{proId},
+			#{proName},
+			#{markPrice},
+			#{prePrice},
+			#{proCount},
+			#{unit},
+			#{stutas},
+			#{standard},
+			#{spec},
+			#{modifyDate})
+	</insert>
+	
+	<delete id="delProduction">
+		DELETE FROM Production WHERE proId=#{proId}
+	</delete>
+	
+	<update id="updateProduction">
+		UPDATE `slmall`.`production`
+		SET 
+		  `proName` = #{proName},
+		  `markPrice` = #{markPrice},
+		  `prePrice` = #{prePrice},
+		  `proCount` = #{proCount},
+		  `unit` = #{unit},
+		  `stutas` = #{stutas},
+		  `standard` = #{standard},
+		  `spec` = #{spec},
+		  `modifyDate` = #{modifyDate}
+		WHERE `proId` = #{proId}
+	</update>
+	<update id="updateProNum">
+		UPDATE `production`
+		SET 
+		  
+		  `proCount` =#{proCount},
+		
+		WHERE `proId` = #{proId}
+	</update>
+	<select id="queryProductionInSet" resultType="Integer">
+		SELECT COUNT(*) FROM setinfo s WHERE s.`proId`=#{proId}
+	</select>
+</mapper>

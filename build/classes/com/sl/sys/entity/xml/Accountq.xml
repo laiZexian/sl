@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//UNKNOWN/" "mybatis-3-mapper.dtd">
+<mapper namespace="com.sl.sys.dao.AccountqDao">
+	
+	<insert id="addAccount">
+		INSERT INTO account (userCode,totalMoney,accountType) VALUES(#{userCode},#{totalMoney},#{accountType})
+	</insert>
+	
+</mapper>

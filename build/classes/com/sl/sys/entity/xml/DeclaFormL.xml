@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//UNKNOWN/" "mybatis-3-mapper.dtd">
+<mapper namespace="com.sl.sys.dao.DeclaFormLDao">
+	<select id="showById" resultType="DeclaForm">
+		SELECT userCode,address,postCode,dictionary.dicName 
+		FROM declaForm,dictionary 
+		WHERE dictionary.`dicType`= '快递类型' 
+		AND declaform.`express` = dictionary.`dicValue` 
+		AND declaform.`userCode` = #{userCode}
+	</select>
+	
+	
+	
+	<update id="updateDeclaForm" >
+	UPDATE declaForm 
+	SET 
+	address = #{address},
+	express = #{express},
+	postCode = #{postCode}
+	WHERE userCode = #{userCode}	
+	</update>
+</mapper>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//UNKNOWN/" "mybatis-3-mapper.dtd">
+<mapper namespace="com.sl.sys.dao.FmtDao">
+	<select id="queryFmts" resultType="Fmt">
+		SELECT *FROM fmt r 
+		<where>
+			<if test="fmtName !=null and fmtName !=''">
+			r.`fmtName` LIKE  '%${fmtName}%'
+			</if>
+			<if test="fmtId !=null and fmtId !=0">
+			r.`fmtId` =#{fmtId}
+			</if>
+		</where>
+		
+	</select>
+	
+</mapper>

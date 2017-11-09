@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//UNKNOWN/" "mybatis-3-mapper.dtd">
+<mapper namespace="com.sl.sys.dao.RoleInfoDao">
+	<select id="queryRoleInfo" resultType="RoleInfo">
+		SELECT * FROM RoleInfo r WHERE r.`roleId` =#{roleId}
+	</select>
+	<insert id="addRoleInfo">
+	INSERT INTO `slmall`.`roleinfo`
+	            (`rlId`,
+	             `roleId`,
+	             `fmtId`,
+	             `stutas`)
+	VALUES (DEFAULT,
+	        #{roleId},
+	        #{fmtId},
+	        #{stutas})
+	</insert>
+	<update id="updateRoleInfo">
+		UPDATE `slmall`.`roleinfo`
+		SET 
+		  `stutas` = #{stutas}
+		  
+		WHERE `rlId` = #{rlId}
+	</update>
+</mapper>
